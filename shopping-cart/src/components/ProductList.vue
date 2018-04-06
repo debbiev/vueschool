@@ -9,15 +9,23 @@
 
 <script>
 	import shop from '@/api/shop'
+	import store from '@/store/index'
+
+	//store.fetchProducts()
+
 	export default{
-		data () {
-			return {
-				products: []
+		computed: {
+			products () {
+				return store.state.products
 			}
 		},
 		created () {
+			//This gets the hard coded products from ./api/shop.js
 			shop.getProducts(products => {
-				this.products = products
+				//this.products = products
+				//run a mutation instead = more precisely COMMIT a mutation 
+				//  passing a method & a payload
+				store.commit('setProducts', products)
 			})
 		},
 	}
