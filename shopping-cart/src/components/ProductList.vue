@@ -17,7 +17,6 @@
 </template>
 
 <script>
-	//import shop from '@/api/shop'
 	import store from '@/store/index'
 
 	export default{
@@ -35,15 +34,6 @@
 		},
 
 		created () {
-			/* Not best practice, better to do this in an action
-			//This gets the hard coded products from ./api/shop.js
-			shop.getProducts(products => {
-				//this.products = products
-				//run a mutation instead = more precisely COMMIT a mutation 
-				//  passing a method & a payload
-				store.commit('setProducts', products)
-			})
-			*/
 			this.loading = true
 			store.dispatch('fetchProducts')
 			 .then(() => this.loading = false)
