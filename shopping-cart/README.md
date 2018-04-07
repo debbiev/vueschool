@@ -1,4 +1,12 @@
 # shopping-cart
+Tutorial taken from:
+
+	https://vueschool.io/courses/vuex-for-everyone
+
+Completed project available here:
+
+	https://github.com/vuejs/vuex/tree/dev/examples/shopping-cart
+
 
 > A Vue.js project
 
