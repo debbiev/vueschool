@@ -10,6 +10,7 @@ export default new Vuex.Store({
 		products: [],
 		// { id, quantity }
 		cart: [],
+		checkoutStatus: null,
 	},
 
 
@@ -73,6 +74,25 @@ export default new Vuex.Store({
 			}
 		},
 
+		//checkout (context) {
+		checkout ({state, commit}) {
+
+			shop.buyProducts (
+				//context.state.cart, 
+				state.cart, 
+				() => {
+					//context.commit('emptyCart')
+					//context.commit('setCheckoutStatus', 'success')
+					commit('emptyCart')
+					commit('setCheckoutStatus', 'success')
+				},
+				() => {
+					//context.commit('setCheckoutStatus', 'fail')
+					commit('setCheckoutStatus', 'fail')
+				}
+			)
+		}
+
 	},
 
 	mutations: { // responsible for setting and updating the state
@@ -91,6 +111,12 @@ export default new Vuex.Store({
 		},
 		decrementProductInventory (state, product) { 
 			product.inventory--
+		},
+		emptyCart (state) { 
+			state.cart = []
+		},
+		setCheckoutStatus (state, status) { 
+			state.checkoutStatus = status
 		},
 	}
 })
