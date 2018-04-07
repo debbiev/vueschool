@@ -12,7 +12,10 @@
 		<ul v-else>
 			<li v-for="product in products">
 				{{ product.title }} - {{ product.price | currency }} : {{ product.inventory }}
-				<button @click="addProductToCart(product)">Add to cart</button>
+				<button 
+					v-if="product.inventory > 0"
+					@click="addProductToCart(product)">Add to cart</button>
+				<span v-else=""><em>Sold out</em></span>
 			</li>
 		</ul>
 	</div>
@@ -29,7 +32,8 @@
 
 		computed: {
 			products () {
-				return this.$store.getters.availableProducts
+				//return this.$store.getters.availableProducts
+				return this.$store.state.products
 			}
 		},
 
