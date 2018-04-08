@@ -16,6 +16,11 @@
 					v-if="product.inventory > 0"
 					@click="addProductToCart(product)">Add to cart</button>
 				<span v-else=""><em>Sold out</em></span>
+				<!--
+				<button 
+					:disabled="!productIsInStock(product)"
+					@click="addProductToCart(product)">Add to cart</button>
+				-->
 			</li>
 		</ul>
 	</div>
@@ -34,7 +39,12 @@
 			products () {
 				//return this.$store.getters.availableProducts
 				return this.$store.state.products
+			},
+			/*
+			productIsInStock () {
+				return this.$store.getter.productIsInStock
 			}
+			*/
 		},
 
 		methods: {

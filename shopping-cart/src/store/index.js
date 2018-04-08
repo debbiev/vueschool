@@ -40,6 +40,19 @@ export default new Vuex.Store({
 			return getters.cartProducts.reduce((total, product)=> 
 				total + product.price * product.quantity, 0)
 		},
+
+		getProductById (state,getters){
+			return id => {
+				return state.products.find(product => product.id === id)
+			}
+		},
+		// getters aren't built to take args, but you can make it work with a fx
+		// by returning a function that takes an arg
+		productIsInStock () {
+			return (product) => {
+				return product.inventory > 0 //true or false
+			}
+		}
 	},
 
 	actions: { // = does the ajax, don't be tempted to set the state here
@@ -55,20 +68,21 @@ export default new Vuex.Store({
 			})
 		},
 
-		addProductToCart (context, product){
-			if (product.inventory > 0) {
+		addProductToCart ({state, getters, commit}, product){
+			//if (product.inventory > 0) {
+			if (getters.productIsInStock(product)) {
 				//find cartItem
 				const cartItem = 	
-					context.state.cart.find(item => item.id === product.id)
+					state.cart.find(item => item.id === product.id)
 
 				if (!cartItem) {
 					//pushProductToCart
-					context.commit('pushProductToCart', product.id)
+					commit('pushProductToCart', product.id)
 				} else {
 					//increment the quantity
-					context.commit('incrementItemQuantity', cartItem)
+					commit('incrementItemQuantity', cartItem)
 				}
-				context.commit('decrementProductInventory', product)
+				commit('decrementProductInventory', product)
 
 			} else { // out of stock
 			}
